@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
+ {% block test %}
+        <td width="150px" style="padding-top: 75px" valign="top" >
+<div  style="margin-right:20px;border-radius: 20px;height:1000px" class="shadow border container">
+<form action="{% url 'myApp:check' %}" method="post">
+{% csrf_token %}
+{% for ch in check %}
+    {{ ch }}
+    <input type="checkbox" value="{{ ch }}" name="brands">
+    <br>
+    {% endfor %}
+  <p  align="center">
+    <input type="submit" value="جستجو" name="submit">
+</p>
+</form>
+</div>
+        </td>
+        {% endblock %}
+
+{% block content %}
+
+<div class="shadow border container div1" style="margin-top: -370px">
+<div class="gridDiv" >
+        {% for b in query %}
+    <div style="border: solid;text-align: center ">
+              <br>
+{{ b.name }}
+    <br>
+         <br>
+
+           <img src="{{ b.image.url }}" width="200" height="200">
+
+            <br>
+                 {{ b.description|safe|truncatechars_html:100 }}
+     <br>
+         <br>
+                {% if b.takhfif == null %}
+                {{ b.price }}
+{#                    {% elif n.takhfif == 25 %}#}
+{#                    ok#}
+                    {% else %}
+                    <label style="color: red"> {{b.price | mul:b.takhfif | div:100 |sub:b.price |mul:-1 |floatformat:'0' }}
+                          </label>
+    	&nbsp;
+
+                    <del>{{b.price }}</del>
+                {% endif %}
+                <br>
+        <a href="{% url 'myApp:detail' name=b.name brand=b.brand  %} ">     <button class="btn-outline-info">
+                       ادامه مطلب
+                   </button></a>
+<p></p>
+
+
+
+
+    </div>
+        {% endfor %}
+</div>
+</div>
+
+
+{% endblock %}

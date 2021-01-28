@@ -1,0 +1,194 @@
+{% load static %}
+{% load mathfilters %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}" >
+    <link rel="stylesheet" type="text/css" href="{% static 'css/myCss.css' %}" >
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div style="background: #41aea9; float: left" >
+    {% block number %}
+   <a href="{% url 'myApp:showReserve' %}"> <label style="z-index: 10;background: red;float: left;width: 20px; height: 20px;color: white;margin-top: 50px;margin-left:40px;text-align: center">
+{{ num }}
+</label>
+    {% endblock %}
+    <img src="{% static 'img/download.png' %}" style="width: 100px;height: 100px;margin-left:-26px" ></a>
+</div>
+<div class="nav navbar myNav" >
+
+    <div class="nav-link" >
+        <a href="{% url 'myApp:template' %}"  dir="rtl">
+صفحه اصلی
+       </a>
+      <a href="{% url 'myApp:suggestion' %}" class="nav-item">
+ارتباط با ما
+       </a>
+          <a href="{% url 'myApp:reg' %}" class="nav-item">
+ثبت نام
+
+        </a>
+
+        {% if request.user.is_staff or request.user.is_authenticated or request.user.is_superuser %}
+        <a href="{% url 'myApp:logout' %}" class="nav-item">
+خروج
+       </a>
+        {% else %}
+        <a href="{% url 'myApp:log' %}" class="nav-item">
+ورود
+       </a>
+        {% endif %}
+
+
+    </div>
+
+</div>
+
+{% block nav %}
+   <table dir="rtl" width="100%">
+    <tr>
+    {% block test %}
+        <td width="150px" style="padding-top: 75px" valign="top" >
+<div  style="margin-right:20px;border-radius: 20px;height:1000px" class="shadow border container">
+
+        <br>
+       <div  dir="rtl" style="text-align: right" >
+<form action="{% url 'myApp:search' %}" method="get" >
+    <input type="text" name="q" class="input" style="width: 100px" >
+    <p  align="center">
+    <input type="submit" value="جستجو" name="submit">
+</p>
+</form>
+    </div>
+        <hr>
+       <dl align="right">
+
+         <dt><a href="{% url 'myApp:template' %}">
+        دسته بندی
+        </a></dt>
+            {% for c in queryset %}
+        <dd>
+           <a href="{% url 'myApp:myList'  name=c.name %}"> {{ c.name  }}
+       </a>
+        </dd>
+        {% endfor %}
+       </dl>
+
+      </div>
+        </td>
+         </div>
+        {% endblock %}
+      {% endblock %}
+        <td>
+
+
+
+{% block content %}
+
+
+    <br>
+    <div class="shadow border container div1" style="text-align: center"  >
+        <h2 >تازه های آپاوب</h2>
+    <br>
+    <div class="gridDiv border" dir="rtl">
+        {% for n in new %}
+            <div class="border">
+            {{ n.name }}
+            <br>
+
+           <img src="{{ n.image.url }}" width="200" height="200">
+
+            <br>
+                {% if n.takhfif == null %}
+                {{ n.price }}
+{#                    {% elif n.takhfif == 25 %}#}
+{#                    ok#}
+                    {% else %}
+
+
+                          <label style="color: red"> {{ n.price | mul:n.takhfif | div:100 |sub:n.price |mul:-1 |floatformat:'0' }}
+                          </label>
+                    	&nbsp;
+                     <del>{{n.price }}</del>
+                {% endif %}
+                <br>
+              <a href="{% url 'myApp:detail' name=n.name brand=n.brand  %} ">
+                   <button class="btn-outline-info">
+                       ادامه مطلب
+                   </button></a>
+            <p></p>
+            </div>
+        {% endfor %}
+    </div>
+    </div>
+<div class="shadow border container div1" style="text-align: center">
+<h2>دسته بندی</h2>
+<div class="gridDivCategory">
+{% for c in queryset %}
+  <div style="border: solid;text-align: center ">
+<br>
+{{ c.description|safe }}
+<br>
+{{ c.name }}
+  <br>
+      <form action="{% url 'myApp:myList'  name=c.name %}">
+{#          <input type="hidden" value="{{ c.name }}">#}
+          {% csrf_token %}
+  <button type="submit">
+      مشاهده
+  </button>
+              </form>
+      <br>
+</div>
+
+   {% endfor %}
+</div>
+
+</div>
+    <br>
+
+
+<div class="shadow border container div1" style="text-align: center">
+<h2>پیشنهادهای ویژه</h2>
+
+        <div class="gridDiv " dir="rtl">
+            {% for t in takhfif %}
+                  <div class="border">
+    <br>
+    {{ t.name }}
+    <br>
+    <del>{{ t.price }}</del>
+    <br>
+      <label style="color: red"> {{ t.price | mul:t.takhfif | div:100 |sub:t.price |mul:-1 |floatformat:'0' }}
+</label>
+                    <br>
+              <a href="{% url 'myApp:detail' name=t.name brand=t.brand  %} ">
+                  <button class="btn-outline-info">
+                  خرید
+            </button>  </a>
+<p></p>
+                  </div>
+            {% endfor %}
+        </div>
+
+</div>
+
+
+
+{% endblock %}
+       </td>
+    </tr>
+</table>
+
+</body>
+</html>
+
+{% block js %}
+
+{% endblock %}

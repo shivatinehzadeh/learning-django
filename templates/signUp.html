@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block nav %}
+
+              {% endblock %}
+{% block content %}
+    <div align="center">
+     <div style="color: red">
+         {% for m in messages %}
+             <h1>
+             {{ m }}
+             </h1>
+         {% endfor %}
+     </div>
+    <div class="signUpDiv" dir="rtl">
+        <table align="center">
+<form  method="post">
+    {% csrf_token %}
+    <tr><td>
+    {{ form.as_table }}
+    <br>
+    </td></tr>
+   <tr><td>
+  <input type="submit" value="send">
+    </td></tr>
+</form>
+            </table>
+
+    </div>
+    </div>
+{% endblock %}

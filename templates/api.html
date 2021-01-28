@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1 style="color: red">my api</h1>
+{% for r in response %}
+  <h1 style="color: red">title</h1> : {{ r.title }}
+    <br>
+ <h1 style="color: red">body</h1>:   {{ r.body }}
+    <hr>
+{% endfor %}
+</body>
+</html>

@@ -1,0 +1,50 @@
+.myNav{
+    height: 100px;
+    direction: rtl;
+    background-color: #41aea9;
+}
+.myNav a{
+    color: white;
+}
+.nav-item{
+    padding: 20px;
+}
+
+.myNav{
+    height: 100px;
+    direction: rtl;
+    background-color: #41aea9;
+}
+.myNav a{
+    color: white;
+}
+.nav-item{
+    padding: 20px;
+}
+.div1{
+    border-radius:20px;
+    padding-top: 50px;
+    margin-top: 50px;
+}
+.gridDiv{
+ display: grid;
+ grid-template-columns: repeat(3, 30%);
+ grid-row-gap: 20px;
+    justify-content: space-between;
+}
+.gridDivCategory{
+
+ display: grid;
+ grid-template-columns: repeat(2, 50%);
+ grid-row-gap: 20px;
+    justify-content: space-between;
+}
+
+.signUpDiv{
+    padding: 20px;
+    margin: 20px;
+    box-shadow: gray ;
+    background-color: lightblue;
+    text-align: center;
+    width:50%;
+}

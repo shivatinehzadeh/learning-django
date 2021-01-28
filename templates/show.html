@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load mathfilters %}
+
+{% block nav %}
+
+              {% endblock %}
+
+{% block content %}
+    <br>
+
+<div class="shadow container ">
+<div >
+        {% for b in query %}
+    <div style="text-align: center ">
+              <br>
+{{ b.name }}
+    <br>
+price:
+                {% if b.takhfif == null %}
+    {{ b.price }}
+    {% else %}
+ <del>{{ b.price }}</del>
+    <br>
+      <label style="color: red"> {{ b.price | mul:b.takhfif | div:100 |sub:b.price |mul:-1 |floatformat:'0' }}
+</label>
+ {% endif %}
+            <br>
+{{ b.quantity }}
+            <hr>
+{% endfor %}
+<br>
+
+</div>
+</div>
+   </div>
+<div style="bottom: 0;color: white;background: #41aea9;width: 100%;height: 100px;text-align: center">
+<h1>total:{{ total }}</h1>
+    <form action="{% url 'myApp:request' %}" method="post" >
+        {% csrf_token %}
+<button type="submit" class="btn-outline-danger" style="border-radius: 20px;width: 100px;height: 40px">خرید</button>
+</form>
+</div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block nav %}
+
+ {% endblock %}
+ {% block number %}
+    <label style="z-index: 10;background: red;float: left;width: 20px; height: 20px;color: white;margin-top: 50px;margin-left:40px;text-align: center">
+0
+</label>
+    {% endblock %}
+{% block content %}
+    <div align="center">
+    <div class="signUpDiv" dir="rtl">
+        <table align="center">
+<form  method="post">
+    {% csrf_token %}
+    <tr><td>
+    {{ form.as_table }}
+    <br>
+    </td></tr>
+    <tr><td>
+  <input type="submit" value="send">
+    </td></tr>
+</form>
+            </table>
+
+    </div>
+    </div>
+{% endblock %}
